@@ -1,0 +1,67 @@
+@import "../reindeer/reindeer.scss";
+
+@mixin gplus {
+  @include reindeer;
+
+  .v-button {
+    font-family: "Monospace";
+  }
+ 
+  .dock-calendar {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    background: url("images/calendar.png") no-repeat scroll 8px 0 transparent;
+    position: relative;
+    
+    .dock-calendar-wrap {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 64px;
+      text-align: center;
+      overflow: show;
+      whitespace: nowrap;
+    }
+  }
+  
+  .dock-palette {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    background: url("images/palette.png") no-repeat scroll 8px 0 transparent;
+    position: relative;
+    
+    .dock-palette-wrap {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 64px;
+      text-align: center;
+      overflow: show;
+      whitespace: nowrap;
+    }
+  }
+  
+  .dock-update {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    background: url("images/update.png") no-repeat scroll 8px 0 transparent;
+    position: relative;
+    
+    .dock-update-wrap {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 64px;
+      text-align: center;
+      overflow: show;
+      whitespace: nowrap;
+    }
+  }
+  
+  .dock .v-spacing {
+    height: 20px;
+  }
+}

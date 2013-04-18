@@ -1,22 +1,25 @@
 package com.zybnet.gplus;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Table.ColumnHeaderMode;
 
+@Theme("gplus")
 public class Main extends UI {
   
   private static final long serialVersionUID = -8321945541107800404L;
   
-  public static final String DOCK_WIDTH = "200px";
+  public static final String DOCK_WIDTH = "100px";
   private static final String HEADER_HEIGHT = "60px";
   
   @Override
@@ -50,13 +53,23 @@ public class Main extends UI {
   
   private Component dock() {
     VerticalLayout dock = new VerticalLayout();
-    Component[] buttons = {new Button("Hola chicos"), new Button("Hello world")};
+    dock.setSpacing(true);
     dock.setWidth(DOCK_WIDTH);
-    for (Component c : buttons) {
-      dock.addComponent(c);
-      dock.setComponentAlignment(c, Alignment.MIDDLE_CENTER);
-    }
+    dock.setStyleName("dock");
+    
+    makeDockButton("Calendar", "dock-calendar", dock);
+    makeDockButton("Palette", "dock-palette", dock);
+    makeDockButton("Update", "dock-update", dock);
+    
     return dock;
+  }
+  
+  private Button makeDockButton(String caption, String slug, AbstractOrderedLayout dock) {
+    Button b = new Button(caption);
+    b.setPrimaryStyleName(slug);
+    dock.addComponent(b);
+    dock.setComponentAlignment(b, Alignment.MIDDLE_CENTER);
+    return b;
   }
   
   private Component posts() {
