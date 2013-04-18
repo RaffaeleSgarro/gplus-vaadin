@@ -2,7 +2,11 @@
 
 @mixin gplus {
   @include reindeer;
-
+  
+  .v-widget {
+    font-size: 14px;
+  }
+  
   .v-button {
     font-family: "Monospace";
   }
@@ -80,6 +84,10 @@
   .post-content {
     border: 1px solid #ddd;
     border-radius: 5px;
+    
+    .post-content-content {
+      padding: 10px;
+    }
     
     .post-header {
       padding-left: 10px;
