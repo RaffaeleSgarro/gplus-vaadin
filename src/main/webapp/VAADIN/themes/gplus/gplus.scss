@@ -64,4 +64,56 @@
   .dock .v-spacing {
     height: 20px;
   }
+  
+  .post-author {
+    text-align: center;
+    
+    img {
+      border-radius: 5px;
+    }
+    
+    .v-captiontext {
+      display: none;
+    }
+  }
+  
+  .post-content {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    
+    .post-header {
+      padding-left: 10px;
+      height: 48px;
+      
+      .author-name {
+        font-weight: bold;
+      }
+      
+      .v-label {
+        line-height: 48px;
+      }
+    }
+    
+    .v-captiontext {
+      display: none;
+    }
+    
+    .post-date {
+      color: #888;
+    }
+  }
+  
+  .post-wrapper {
+    padding-right: 16px;
+  }
+  
+  .posts {
+    .v-table-cell-content {
+      padding: 10px 0;
+    }
+    
+    .v-table-row-odd {
+      background-color: #fff;
+    }
+  }
 }

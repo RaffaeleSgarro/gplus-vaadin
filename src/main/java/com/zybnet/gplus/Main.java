@@ -24,6 +24,8 @@ public class Main extends UI {
   
   @Override
   public void init(VaadinRequest req) {
+    // TODO use DI
+    IDataSource ds = new FakeDataSource();
     
     HorizontalLayout header = new HorizontalLayout();
     Label headerLabel = new Label("Hello World!");
@@ -35,7 +37,7 @@ public class Main extends UI {
     
     // Setup content
     HorizontalLayout content = new HorizontalLayout();
-    Component dock = dock(), posts = posts();
+    Component dock = dock(), posts = posts(ds);
     content.setSizeFull();
     content.addComponents(dock, posts);
     content.setExpandRatio(posts, 1);
@@ -72,13 +74,14 @@ public class Main extends UI {
     return b;
   }
   
-  private Component posts() {
+  private Component posts(IDataSource ds) {
     Table posts = new Table();
+    posts.setStyleName("posts");
     posts.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
     posts.setSizeFull();
-    posts.addContainerProperty("Name", String.class, null);
-    for (int i = 0; i < 1000; i++) {
-      posts.addItem(new Object[] {"Hello Moto"}, i);
+    posts.addContainerProperty("Post", PostDisplay.class, null);
+    for (int i = 0; i < 10; i++) {
+      posts.addItem(new Object[] { new PostDisplay(ds.findPostById(Integer.toString(i))) }, i);
     }
     return posts;
   }
