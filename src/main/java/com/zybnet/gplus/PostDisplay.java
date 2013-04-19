@@ -36,39 +36,42 @@ public class PostDisplay extends CustomComponent {
     root.setWidth("100%");
     
     VerticalLayout author = new VerticalLayout();
-    author.setStyleName("post-author");
+    author.addStyleName("post-author");
     Image authorPic = new Image("CAPTION", new ExternalResource(post.author.profilePictureURL));
     author.addComponent(authorPic);
     author.setWidth(AUTHOR_COLUMN_WIDTH);
     
     VerticalLayout contentWrapper = new VerticalLayout();
-    contentWrapper.setStyleName("post-content");
+    contentWrapper.addStyleName("post-content");
     HorizontalLayout header = new HorizontalLayout();
     Label authorName = new Label(post.author.name);
-    authorName.setStyleName("author-name");
+    authorName.addStyleName("author-name");
     header.addComponent(authorName);
-    header.setStyleName("post-header");
+    header.addStyleName("post-header");
     header.setSpacing(true);
     Label date = new Label(df.format(post.date));
-    date.setStyleName("post-date");
+    date.addStyleName("post-date");
     header.addComponent(date);
     
     contentWrapper.addComponent(header);
     
+    Panel p = new Panel();
+    p.setWidth("100%");
     // How bad a name can be???
     HorizontalLayout contentContent = new HorizontalLayout();
+    contentContent.setWidth("100%");
+    p.setContent(contentContent);
     contentContent.setSpacing(true);
-    contentContent.setStyleName("post-content-content");
+    contentContent.addStyleName("post-content-content");
     Image contentImg = new Image("CAPTION", new ExternalResource(post.imageURL));
     
-    VerticalLayout contentDesc = new VerticalLayout();
     Label text = new Label(post.text);
-    contentDesc.addComponent(text);
+    text.setSizeUndefined();
     
-    contentContent.addComponents(contentImg, contentDesc);
-    contentContent.setExpandRatio(contentDesc, 1);
+    contentContent.addComponents(contentImg, text);
+    contentContent.setExpandRatio(text, 1);
     
-    contentWrapper.addComponents(contentContent);
+    contentWrapper.addComponent(p);
     
     root.addComponents(author, contentWrapper);
     root.setExpandRatio(contentWrapper, 1.0f);
