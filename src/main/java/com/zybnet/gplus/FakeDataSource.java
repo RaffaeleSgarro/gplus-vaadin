@@ -31,12 +31,13 @@ public class FakeDataSource implements IDataSource {
   }
 
   private String loremIpsum(String id) {
-    return "Lorem ipsum dolor sit amen skj alkdjf " +
-    		"laksdj flaksdjflaksdjlfaksdlfkas dlfkasjdf laksjdflaskd flaksdfj " +
-    		"laskdfjlaskdf alksdjf laskdfj laksdjflaksdf laksd flaksdj f" +
-    		"adfafalsdkfj asldkfj alsdkfj alskdfj laskdjf laskdfjlaskdjf" +
-    		"asdfas dfasd fasòdfk apop oafasd fasdf asdifasdifj asoidfj aosidjf a" +
-    		"asdlf asldkfj alskdfj alsdkfja sdkfasldkf alsdkf alsdk jalsdk falsdkf ja";
+    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris " +
+           "eleifend ornare neque convallis ultrices. Aliquam luctus cursus " +
+           "viverra. Nunc vitae risus vitae magna venenatis molestie. " +
+           "Phasellus quis dolor eget dui imperdiet hendrerit. Fusce vehicula " +
+           "luctus erat, et luctus tortor placerat et. Duis viverra, dolor " +
+           "euismod sodales volutpat, odio elit porttitor elit, quis " +
+           "vulputate augue orci sagittis odio. Fusce ornare ornare ultrices.";
   }
 
   @Override

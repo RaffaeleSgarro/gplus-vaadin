@@ -9,6 +9,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.zybnet.gplus.beans.Post;
 
@@ -26,6 +27,9 @@ public class PostDisplay extends CustomComponent {
     VerticalLayout wrapper = new VerticalLayout();
     wrapper.setStyleName("post-wrapper");
     wrapper.addComponent(getPostDisplay());
+    
+    //setSizeFull();
+    //wrapper.setSizeFull();
     
     setCompositionRoot(wrapper);
   }
@@ -65,8 +69,13 @@ public class PostDisplay extends CustomComponent {
     contentContent.addStyleName("post-content-content");
     Image contentImg = new Image("CAPTION", new ExternalResource(post.imageURL));
     
-    Label text = new Label(post.text);
-    text.setSizeUndefined();
+    // BUG TODO TextArea should not be used here, I suppose...
+    TextArea text = new TextArea();
+    //Label text = new Label();
+    text.setValue(post.text);
+    text.addStyleName("post-content-text");
+    text.setReadOnly(true);
+    text.setSizeFull();
     
     contentContent.addComponents(contentImg, text);
     contentContent.setExpandRatio(text, 1);
