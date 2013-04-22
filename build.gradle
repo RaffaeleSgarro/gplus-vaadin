@@ -6,6 +6,16 @@ apply plugin: 'idea'
 project.war.baseName = 'gplus'
 jettyRun.scanIntervalSeconds = 1
 
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  
+  dependencies {
+    classpath 'net.sf.proguard:proguard-gradle:4.9'
+  }
+}
+
 repositories {
   mavenCentral()
 }
@@ -14,5 +24,21 @@ dependencies {
   compile 'com.vaadin:vaadin-server:7.0.3'
   runtime 'com.vaadin:vaadin-client-compiled:7.0.3'
   runtime 'com.vaadin:vaadin-themes:7.0.3'
+}
+
+task proguard(type: proguard.gradle.ProGuardTask, dependsOn: 'jar') {
+  def outDir = new File("${buildDir}/proguard")
+  def obfuscatedJar = "${outDir}/${jar.baseName}.jar"
+  
+  outDir.mkdirs()
+  
+  injars jar.archivePath
+  outjars obfuscatedJar
+  
+  printmapping "${outDir}out.map"
+  libraryjars configurations.compile
+  configuration 'proguard.pro'
+  
+  println "[Proguard] Generated obfuscated JAR in ${obfuscatedJar}"
 }
 
