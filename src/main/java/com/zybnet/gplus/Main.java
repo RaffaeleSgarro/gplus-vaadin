@@ -1,18 +1,25 @@
 package com.zybnet.gplus;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 @Theme("gplus")
 public class Main extends UI {
@@ -21,6 +28,8 @@ public class Main extends UI {
   
   public static final String DOCK_WIDTH = "100px";
   private static final String HEADER_HEIGHT = "60px";
+  
+  private Window lastOpenedWindow;
   
   @Override
   public void init(VaadinRequest req) {
@@ -71,8 +80,50 @@ public class Main extends UI {
     return dock;
   }
   
+  // TODO
+  private ClickListener showPopup = new ClickListener() {
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Override
+    public void buttonClick(ClickEvent event) {
+      if (lastOpenedWindow != null) {
+        lastOpenedWindow.close();
+      }
+      final Window w = new Window("Dock button clicked");
+      lastOpenedWindow = w;
+      
+      w.addStyleName("dock-popup");
+      w.setImmediate(true);
+      w.setWidth("300px");
+      w.setPositionX(95);
+      w.setPositionY(event.getClientY() - event.getRelativeY());
+      
+      w.setClosable(false);
+      w.setResizable(false);
+      w.setDraggable(false);
+      
+      VerticalLayout content = new VerticalLayout();
+      content.addComponent(new Image("CAPTION",
+          new ExternalResource("http://placekitten.com/48/48")));
+      w.setContent(content);
+      
+      getUI().addWindow(w);
+      ((VerticalLayout) getUI().getContent()).addLayoutClickListener(new LayoutClickListener(){
+        @Override
+        public void layoutClick(LayoutClickEvent event) {
+          w.close();
+        }
+        
+      });
+      
+    }
+    
+  };
+  
   private Button makeDockButton(String caption, String slug, AbstractOrderedLayout dock) {
     Button b = new Button(caption);
+    b.addClickListener(showPopup);
     b.setPrimaryStyleName(slug);
     dock.addComponent(b);
     dock.setComponentAlignment(b, Alignment.MIDDLE_CENTER);
