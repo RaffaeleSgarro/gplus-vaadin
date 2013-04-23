@@ -40,7 +40,9 @@ task proguard(type: proguard.gradle.ProGuardTask, dependsOn: 'jar') {
   libraryjars configurations.compile
   configuration 'proguard.pro'
   
-  println "[Proguard] Generated obfuscated JAR in ${obfuscatedJar}"
+  doLast {
+    logger.lifecycle "[Proguard] Generated obfuscated JAR in ${obfuscatedJar}"
+  }
 }
 
 task obfuscateWar(type: Jar, dependsOn: [proguard, 'war']) {
@@ -55,6 +57,8 @@ task obfuscateWar(type: Jar, dependsOn: [proguard, 'war']) {
     into 'WEB-INF/lib'
   }
   
-  println "[Proguard] Generated obfuscated WAR"
+  doLast {
+    logger.lifecycle "[Proguard] Generated obfuscated WAR in ${archivePath}"
+  }
 }
 
