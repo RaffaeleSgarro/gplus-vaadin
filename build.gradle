@@ -27,18 +27,34 @@ dependencies {
 }
 
 task proguard(type: proguard.gradle.ProGuardTask, dependsOn: 'jar') {
-  def outDir = new File("${buildDir}/proguard")
-  def obfuscatedJar = "${outDir}/${jar.baseName}.jar"
-  
+  ext {
+    outDir = file("${buildDir}/proguard")
+    obfuscatedJar = "${outDir}/${jar.baseName}.jar"
+  }
   outDir.mkdirs()
   
   injars jar.archivePath
   outjars obfuscatedJar
   
-  printmapping "${outDir}out.map"
+  printmapping "${outDir}/mappings.out"
   libraryjars configurations.compile
   configuration 'proguard.pro'
   
   println "[Proguard] Generated obfuscated JAR in ${obfuscatedJar}"
+}
+
+task obfuscateWar(type: Jar, dependsOn: [proguard, 'war']) {
+  destinationDir = proguard.outDir
+  extension = 'war'
+  
+  from (zipTree(war.archivePath)) {
+    exclude 'WEB-INF/classes/**'
+  }
+  
+  from (file(proguard.obfuscatedJar)) {
+    into 'WEB-INF/lib'
+  }
+  
+  println "[Proguard] Generated obfuscated WAR"
 }
 
